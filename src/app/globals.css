@@ -1,26 +1,38 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+}
+
+/* Color of the faint static glyphs in the hero's ASCII flow background. */
+:root {
+  --ns-muted: #8f8f8f;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  @apply bg-white font-sans text-black;
+}
+
+/* Accent type: all <dt> labels are uppercase monospace. Tailwind's --font-mono
+   is ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+   "Courier New", monospace. In the base layer so utility classes still win. */
+@layer base {
+  dt {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 12px;
+  }
+}
+
+/* Hide the heading until GSAP has split it, so the plain text doesn't flash
+   first. Only when JS can run and motion is allowed, so it's never stuck hidden. */
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  .split-reveal {
+    visibility: hidden;
+  }
 }
