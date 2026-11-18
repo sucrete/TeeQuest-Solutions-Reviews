@@ -37,10 +37,13 @@ function parse(text: string) {
 export function NumberReveal({
   children,
   threshold = 0.5,
+  delay = 0,
 }: {
   children: ReactNode;
   /** share of the number that must be visible before it animates */
   threshold?: number;
+  /** seconds to wait after it comes into view */
+  delay?: number;
 }) {
   const ref = useRef<HTMLSpanElement>(null);
   const [inView, setInView] = useState(false);
@@ -51,18 +54,22 @@ export function NumberReveal({
   useEffect(() => {
     const el = ref.current;
     if (!el || !hasNumber) return;
+    let timer: ReturnType<typeof setTimeout> | undefined;
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry?.isIntersecting) {
-          setInView(true);
           observer.disconnect();
+          timer = setTimeout(() => setInView(true), delay * 1000);
         }
       },
       { threshold },
     );
     observer.observe(el);
-    return () => observer.disconnect();
-  }, [hasNumber, threshold]);
+    return () => {
+      observer.disconnect();
+      clearTimeout(timer);
+    };
+  }, [hasNumber, threshold, delay]);
 
   if (!parsed) return <>{children}</>;
 

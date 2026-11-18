@@ -2,6 +2,8 @@
 
 @theme inline {
   --font-sans: var(--font-geist-sans);
+  /* Departure Mono (loaded in layout.tsx) for every font-mono and <dt> */
+  --font-mono: var(--font-departure-mono), ui-monospace, monospace;
 }
 
 html {
@@ -17,9 +19,8 @@ body {
   @apply bg-white font-sans text-black;
 }
 
-/* Accent type: all <dt> labels are uppercase monospace. Tailwind's --font-mono
-   is ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
-   "Courier New", monospace. In the base layer so utility classes still win. */
+/* Accent type: all <dt> labels are uppercase monospace (Departure Mono, see
+   --font-mono above). In the base layer so utility classes still win. */
 @layer base {
   dt {
     font-family: var(--font-mono);
@@ -34,5 +35,46 @@ body {
 @media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
   .split-reveal {
     visibility: hidden;
+  }
+}
+
+/* Hero card glow: the uneven purple (#6633ee) shape behind the card
+   (HeroGlow in Hero.tsx), blurred well past its outline so it reads as a
+   faint halo rather than a shape. On page load it fades and swells in,
+   timed with the card's label (Hero.tsx SEQ.cardLabel). With reduced
+   motion it's just there. */
+.hero-card-glow {
+  filter: blur(30px);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .hero-card-glow {
+    animation: hero-card-glow-in 1.4s cubic-bezier(0.22, 0.61, 0.36, 1) 0.4s
+      both;
+  }
+}
+@keyframes hero-card-glow-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+}
+
+/* Word-by-word entrance in CSS (WordReveal.tsx): each word rises 10px and
+   fades in, circ.out over 0.8s, like the GSAP reveals, with its own
+   animation-delay. Runs from the first frames with no JavaScript, so text
+   above the fold paints right away. With reduced motion the words just
+   show. */
+.word-in {
+  display: inline-block;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .word-in {
+    animation: word-in 0.8s cubic-bezier(0, 0.55, 0.45, 1) both;
+  }
+}
+@keyframes word-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
   }
 }

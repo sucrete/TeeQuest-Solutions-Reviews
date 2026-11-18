@@ -27,6 +27,8 @@ import { useEffect, useRef, useState } from "react";
 // - amplitude: bob travel in grid pixels. Fractions give the edge shimmer;
 //   whole numbers move it like a sprite with a fixed silhouette. 0 = still.
 // - period: ms per full bob.
+// - phase: 0..1, how far into the bob cycle it starts, so several on one
+//   page don't bob in unison.
 // - fps: animation steps per second; low values read as retro.
 // ---------------------------------------------------------------------------
 
@@ -192,6 +194,8 @@ export interface PixelSvgProps {
   amplitude?: number;
   /** ms per full bob */
   period?: number;
+  /** 0..1 head start into the bob cycle */
+  phase?: number;
   /** animation steps per second */
   fps?: number;
   className?: string;
@@ -202,6 +206,7 @@ export function PixelSvg({
   cols = 48,
   amplitude = 1.5,
   period = 2400,
+  phase = 0,
   fps = 12,
   className = "",
 }: PixelSvgProps) {
@@ -283,14 +288,14 @@ export function PixelSvg({
       const step = Math.floor(now / (1000 / fps));
       if (step !== lastStep) {
         lastStep = step;
-        const t = (step * (1000 / fps)) / period;
+        const t = (step * (1000 / fps)) / period + phase;
         draw(Math.sin(t * Math.PI * 2) * amplitude);
       }
       raf = requestAnimationFrame(loop);
     };
     raf = requestAnimationFrame(loop);
     return () => cancelAnimationFrame(raf);
-  }, [art, cols, rows, scale, amplitude, period, fps]);
+  }, [art, cols, rows, scale, amplitude, period, phase, fps]);
 
   return (
     <canvas

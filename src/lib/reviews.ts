@@ -34,7 +34,21 @@ export const stats = {
   switchedFromGolfNow: reviews.filter((r) =>
     r.switched_from?.product.startsWith("GolfNow"),
   ).length,
+  /** share of reviews rated 4 or 5 stars, as a whole percent */
+  positivePercent: Math.round(
+    (reviews.filter((r) => r.rating >= 4).length / reviews.length) * 100,
+  ),
+  // Capterra's "Customer Service" category score for TeeQuest, entered by
+  // hand: reviews.json only has each review's overall rating, not the
+  // category scores. Update it if Capterra's score changes.
+  customerSupport: 5.0,
 };
+
+// The text shown as a review's body: the review itself, or, for reviews that
+// only answered pros/cons, their pros (pros and cons aren't shown otherwise).
+export function reviewBody(r: Review): string | null {
+  return r.review || r.pros;
+}
 
 // Everything a visitor might search for, lowercased once at build time.
 export function searchText(r: Review): string {
@@ -43,9 +57,8 @@ export function searchText(r: Review): string {
     r.reviewer.title,
     r.reviewer.industry,
     r.title,
-    r.review,
-    r.pros,
-    r.cons,
+    // only the text shown on the card (see reviewBody)
+    reviewBody(r),
     r.reason_for_choosing,
     r.switched_from?.product,
     r.switched_from?.reason,

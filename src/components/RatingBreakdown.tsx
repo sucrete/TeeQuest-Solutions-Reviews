@@ -4,6 +4,7 @@ import { useRef, type CSSProperties } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import { PLAY_ONCE } from "@/components/Reveal";
 import { cn } from "@/lib/utils";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
@@ -40,9 +41,12 @@ function Star({ className }: { className?: string }) {
 export function RatingBreakdown({
   data,
   className,
+  delay = 0,
 }: {
   data: RatingSegment[];
   className?: string;
+  /** seconds to wait before the segments grow */
+  delay?: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const total = data.reduce((sum, d) => sum + d.value, 0);
@@ -56,7 +60,12 @@ export function RatingBreakdown({
         duration: 0.8,
         ease: "power1.inOut",
         stagger: 0.1,
-        scrollTrigger: { trigger: ref.current, start: "top 90%", once: true },
+        delay,
+        scrollTrigger: {
+          trigger: ref.current,
+          start: "top 90%",
+          toggleActions: PLAY_ONCE,
+        },
       });
     },
     { scope: ref },
@@ -64,6 +73,7 @@ export function RatingBreakdown({
 
   return (
     <div ref={ref} className={className}>
+      <p className="text-black font-semibold mb-1">Overall Sentiment</p>
       <div
         role="img"
         aria-label={`Rating breakdown: ${data
@@ -84,7 +94,7 @@ export function RatingBreakdown({
               "h-full w-(--w) shrink-0",
               "motion-safe:[@media(scripting:enabled)]:w-0",
               // thin gap between segments, in the card's background color
-              i < data.length - 1 && "border-r-2 border-[#f6f6f6]",
+              i < data.length - 1 && "border-r-2 border-white",
               d.color,
             )}
           />
@@ -101,11 +111,11 @@ export function RatingBreakdown({
             <span className="flex items-center gap-0.5 font-medium text-black">
               {d.stars}
               <Star />
-              <span className="sr-only"> stars:</span>
+              {/* <span className="sr-only"> stars:</span> */}
             </span>
-            <span className="text-neutral-400">
+            {/* <span className="text-neutral-400">
               {d.value} ({pct(d.value).toFixed(0)}%)
-            </span>
+            </span> */}
           </li>
         ))}
       </ul>

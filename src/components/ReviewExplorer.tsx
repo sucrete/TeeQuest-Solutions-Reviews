@@ -1,6 +1,9 @@
 "use client";
 
 import { Children, useState, type ReactNode } from "react";
+import { ButtonText } from "@/components/Button";
+import { button } from "@/components/buttonStyles";
+import { cn } from "@/lib/utils";
 
 type Entry = { rating: number; text: string };
 type RatingFilter = "all" | 5 | 4;
@@ -36,7 +39,12 @@ export function ReviewExplorer({
     f === "all" ? entries.length : entries.filter((e) => e.rating === f).length;
 
   return (
-    <>
+    // one white panel with a soft shadow holds the search, the filters and
+    // the cards. 17px of padding (12px plus 5px) leaves room for the
+    // cards' 5px hover ring; the corners grew by the same 5px (21 to 26px)
+    // so the nested corners still line up.
+    <div className="rounded-[26px] border border-neutral-200 bg-white p-[17px] shadow-[0_1px_2px_rgb(0_0_0/0.04),0_8px_24px_-6px_rgb(0_0_0/0.08)]">
+      {/* search and filters */}
       <div className="flex flex-col gap-3 sm:flex-row">
         <label className="relative flex-1">
           <span className="sr-only">Search reviews</span>
@@ -70,7 +78,7 @@ export function ReviewExplorer({
               type="button"
               aria-pressed={rating === f.value}
               onClick={() => setRating(f.value)}
-              className="flex-1 px-4 text-sm font-medium whitespace-nowrap not-first:border-l not-first:border-neutral-300 aria-pressed:bg-black aria-pressed:text-white sm:flex-none"
+              className="flex-1 cursor-pointer px-4 text-sm font-medium whitespace-nowrap not-first:border-l not-first:border-neutral-300 aria-pressed:bg-[#63e] aria-pressed:text-white sm:flex-none"
             >
               {f.label} ({countFor(f.value)})
             </button>
@@ -78,14 +86,14 @@ export function ReviewExplorer({
         </div>
       </div>
 
-      <p className="mt-4 text-sm text-neutral-600" aria-live="polite">
+      <p className="mt-4 px-1 text-sm text-neutral-600" aria-live="polite">
         Showing {visible.length} of {entries.length} reviews
       </p>
 
       {visible.length > 0 ? (
-        <div className="mt-6 grid gap-6">{visible}</div>
+        <div className="mt-4 grid gap-3">{visible}</div>
       ) : (
-        <div className="mt-6 rounded-xl border border-neutral-200 bg-white p-10 text-center">
+        <div className="mt-4 rounded-xl border border-neutral-200 bg-white p-10 text-center">
           <p className="font-medium">No reviews match your search.</p>
           <button
             type="button"
@@ -93,12 +101,12 @@ export function ReviewExplorer({
               setQuery("");
               setRating("all");
             }}
-            className="mt-4 rounded-full border border-black px-5 py-2 text-sm font-medium"
+            className={cn(button, "mt-4 px-5 py-[13px]")}
           >
-            Clear search
+            <ButtonText text="Clear search" />
           </button>
         </div>
       )}
-    </>
+    </div>
   );
 }

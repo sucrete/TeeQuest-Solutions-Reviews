@@ -20,7 +20,11 @@ import { useEffect, useRef } from "react";
 //   canvas dims everything at once.
 // ---------------------------------------------------------------------------
 
-const RAMP = " .:-=+*#%@";
+// Grid settings, shared with GradientASCII (see AsciiBackdrop.tsx) so the two
+// layers' characters are the same size and sit on the same grid.
+export const RAMP = " .:-=+*#%@";
+export const GLYPH_CELL = 12; // px per square cell
+export const GLYPH_FONT_SCALE = 0.85; // glyph size as a share of the cell
 const AMBIENT_DENSITY = 0.035; // share of cells that show a resting glyph
 const AMBIENT_MIN = 0.08; // resting glyph heat, min...
 const AMBIENT_RANGE = 0.2; // ...plus up to this much
@@ -33,8 +37,20 @@ const TAIL_COLOR = "#a78bfa"; // everything cooler (Tailwind violet-400)
 export interface WakeGlyphProps {
   /** grid cell size in px */
   cellSize?: number;
+  /** color of the wake's hot center (default white, for dark backgrounds) */
+  coreColor?: string;
+  /** color of the rest of the wake (default violet-400) */
+  tailColor?: string;
   /** extra classes merged onto the canvas */
   className?: string;
+  /** false: just the resting scatter, no pointer wake */
+  pointer?: boolean;
+  /** seeds the resting scatter, so two fields don't repeat each other */
+  seed?: number;
+  /** [from, to] as shares of the height: the resting scatter is absent
+   *  above `from` and gets denser down to full at `to`, so it thins out
+   *  toward the top instead of stopping at a line (default: even) */
+  ambientRamp?: [number, number];
 }
 
 // deterministic PRNG so the ambient scatter is stable within a session
@@ -49,7 +65,16 @@ function mulberry32(seed: number) {
   };
 }
 
-export function WakeGlyph({ cellSize = 12, className = "" }: WakeGlyphProps) {
+export function WakeGlyph({
+  cellSize = GLYPH_CELL,
+  coreColor = CORE_COLOR,
+  tailColor = TAIL_COLOR,
+  className = "",
+  pointer: interactive = true,
+  seed = 0xa53f9c1,
+  ambientRamp,
+}: WakeGlyphProps) {
+  const [rampFrom, rampTo] = ambientRamp ?? [-1, 0];
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -82,7 +107,7 @@ export function WakeGlyph({ cellSize = 12, className = "" }: WakeGlyphProps) {
       canvas.width = Math.max(1, Math.round(width * dpr));
       canvas.height = Math.max(1, Math.round(height * dpr));
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      ctx.font = `${cellSize * 0.85}px ${monoFont}`;
+      ctx.font = `${cellSize * GLYPH_FONT_SCALE}px ${monoFont}`;
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
 
@@ -94,9 +119,15 @@ export function WakeGlyph({ cellSize = 12, className = "" }: WakeGlyphProps) {
       ambient = new Float32Array(n);
 
       // sparse, near-silent ground state: a static seeded scatter of faint cells
-      const rand = mulberry32(0xa53f9c1 ^ (cols * 71 + rows));
+      const rand = mulberry32(seed ^ (cols * 71 + rows));
       for (let i = 0; i < n; i++) {
-        if (rand() < AMBIENT_DENSITY)
+        // ambientRamp: fewer cells toward the top (density, not opacity)
+        const rowShare = (Math.floor(i / cols) + 0.5) / rows;
+        const ramp = Math.min(
+          1,
+          Math.max(0, (rowShare - rampFrom) / (rampTo - rampFrom)),
+        );
+        if (rand() < AMBIENT_DENSITY * ramp)
           ambient[i] = AMBIENT_MIN + rand() * AMBIENT_RANGE;
       }
     };
@@ -114,7 +145,7 @@ export function WakeGlyph({ cellSize = 12, className = "" }: WakeGlyphProps) {
               Math.min(RAMP.length - 1, Math.floor(lum * (RAMP.length - 1)))
             ]!;
           if (ch === " ") continue;
-          ctx.fillStyle = lum >= CORE_THRESHOLD ? CORE_COLOR : TAIL_COLOR;
+          ctx.fillStyle = lum >= CORE_THRESHOLD ? coreColor : tailColor;
           ctx.globalAlpha = Math.min(1, ALPHA_FLOOR + lum * ALPHA_GAIN);
           ctx.fillText(
             ch,
@@ -204,7 +235,7 @@ export function WakeGlyph({ cellSize = 12, className = "" }: WakeGlyphProps) {
     };
 
     resize();
-    if (reduced) {
+    if (reduced || !interactive) {
       draw(); // ambient-only static frame; pointer wake is skipped entirely
     } else {
       pointerTarget.addEventListener("pointermove", onPointerMove);
@@ -218,7 +249,7 @@ export function WakeGlyph({ cellSize = 12, className = "" }: WakeGlyphProps) {
       resizeTimer = setTimeout(() => {
         resizeTimer = null;
         resize();
-        if (reduced) draw();
+        if (reduced || !interactive) draw();
       }, 150);
     };
     window.addEventListener("resize", onResize);
@@ -230,7 +261,7 @@ export function WakeGlyph({ cellSize = 12, className = "" }: WakeGlyphProps) {
       pointerTarget.removeEventListener("pointermove", onPointerMove);
       pointerTarget.removeEventListener("pointerleave", onPointerLeave);
     };
-  }, [cellSize]);
+  }, [cellSize, coreColor, tailColor, interactive, seed, rampFrom, rampTo]);
 
   return (
     <canvas
