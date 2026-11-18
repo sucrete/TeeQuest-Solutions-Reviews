@@ -160,7 +160,7 @@ export function AboutBox() {
             vendor. Fourteen say the POS and tee sheet are easy to learn, even
             for new and part-time staff. Six courses switched from GolfNow and
             now set their own rates instead of trading tee times away. Nine
-            credit a smooth setup and training process.
+            credit a smooth setup and training process. 
           </p>
 
           <footer className="mt-6 border-t border-neutral-200 pt-4 text-sm text-neutral-500">
