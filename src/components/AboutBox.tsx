@@ -9,11 +9,10 @@ import teequestLogo from "@/../public/logos/teequest.svg";
 import flag from "@/../public/shared/flag.svg";
 import talk from "@/../public/shared/talk.png";
 
-// Sentiment summary, styled like a review card (ReviewCard.tsx): white,
-// rounded-xl, neutral-200 border, p-6, semibold tight heading, neutral-700 body
-// and a bordered footer. It keeps the six-layer shadow from the earlier
-// "window.play" trial; that version is backed up in the scratchpad as
-// AboutBox.window.tsx.
+// Sentiment summary, laid out like a review card (ReviewCard.tsx): white,
+// p-8 (2rem), semibold tight heading, neutral-600 body and a bordered footer. Every
+// bento card (and the reviews panel in ReviewExplorer.tsx) has a 1px border
+// in faint grey (#6e6e6e1f), 22px corners and a faint shadow-md (/5).
 //
 // Behind the text, a rainbow fog drawn only in ASCII characters (the
 // hero's GradientASCII with shape="swirl"): when the card scrolls into view
@@ -61,16 +60,13 @@ export function AboutBox() {
     <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
       {/* Bento group: the full-width summary card on top, then two cards
           below it (5/8 and 3/8 wide, on an 8-column grid; stacked on
-          mobile), 6px apart (gap-1.5, the ring's width). One faint ring goes
-          around the whole group rather than each card, and the group's
-          background is the same color, so it shows in the gaps between the
-          cards.
+          mobile), 11px apart (gap-[11px]).
           Every card is a flex column: the heading sits top left with at
           least 3rem (mb-12) below it, and the body (plus any footer) is
           pushed to the bottom with mt-auto, so when one card in a row is
           taller, the other's gap grows instead of leaving space under the
           body. */}
-      <div className="grid gap-1.5 rounded-xl bg-[#00000005] ring-6 ring-[#00000005] sm:grid-cols-8">
+      <div className="grid gap-[11px] rounded-[22px] sm:grid-cols-8">
         {/* the heading's words, the logo, then the paragraph as one
           piece come in one after another (Reveal's rise and fade), starting
           as the wave does: both wait until the card's top passes 75% down
@@ -80,7 +76,7 @@ export function AboutBox() {
           select=".split-reveal"
           start="top 75%"
           stagger={0.015}
-          className="relative isolate flex flex-col overflow-hidden rounded-xl border border-neutral-200 bg-white p-6 shadow-[0_1px_2px_rgb(0_0_0/0.04),0_8px_24px_-6px_rgb(0_0_0/0.08)] sm:col-span-8"
+          className="relative isolate flex flex-col overflow-hidden rounded-[22px] border border-[#6e6e6e1f] bg-white p-8 shadow-md/5 sm:col-span-8"
         >
           {/* decorative (its canvas is aria-hidden); isolate keeps this -z-10
             layer above the card's white */}
@@ -117,7 +113,7 @@ export function AboutBox() {
               What operators love about
               <br /> TeeQuest Solutions...
             </h2>
-            {/* TeeQuest logo in the card's top-right corner, 24px (the
+            {/* TeeQuest logo in the card's top-right corner, 32px (the
                 card's padding) from both the top and right edges; the row's
                 right padding keeps the heading clear of it. Links to
                 teequestsolutions.com in a new tab; part of the reveal, right
@@ -130,7 +126,7 @@ export function AboutBox() {
               data-stagger={0.12}
               // phones: above the heading, in the flow, so the heading gets
               // the card's full width; sm and up: the top-right corner
-              className="split-reveal order-first mb-5 self-start sm:absolute sm:top-6 sm:right-6 sm:order-none sm:mb-0"
+              className="split-reveal order-first mb-5 self-start sm:absolute sm:top-8 sm:right-8 sm:order-none sm:mb-0"
             >
               <Image
                 src={teequestLogo}
@@ -192,10 +188,10 @@ export function AboutBox() {
           select=".split-reveal"
           start="top 75%"
           delay={0}
-          className="relative z-10 flex flex-col rounded-xl border border-neutral-200 bg-white p-6 shadow-[0_1px_2px_rgb(0_0_0/0.04),0_8px_24px_-6px_rgb(0_0_0/0.08)] sm:col-span-5"
+          className="relative z-10 flex flex-col rounded-[22px] border border-[#6e6e6e1f] bg-white p-8 shadow-md/5 sm:col-span-5"
         >
           {/* heading row like the top card's: heading left, US flag in the
-              card's top-right corner, 24px from the top and right edges
+              card's top-right corner, 32px from the top and right edges
               (decorative), coming in right after the heading */}
           <div className="mb-12 flex flex-row pr-12 sm:pr-14">
             <h3
@@ -208,7 +204,7 @@ export function AboutBox() {
             <Image
               data-stagger={0.12}
               // a little smaller on phones, where the heading wraps
-              className="split-reveal absolute top-6 right-6 h-7 w-auto sm:h-9"
+              className="split-reveal absolute top-8 right-8 h-7 w-auto sm:h-9"
               src={flag}
               alt=""
             />
@@ -246,10 +242,10 @@ export function AboutBox() {
           select=".split-reveal"
           start="top 75%"
           delay={0.15}
-          className="relative z-10 flex flex-col rounded-xl border border-neutral-200 bg-white p-6 shadow-[0_1px_2px_rgb(0_0_0/0.04),0_8px_24px_-6px_rgb(0_0_0/0.08)] sm:col-span-3"
+          className="relative z-10 flex flex-col rounded-[22px] border border-[#6e6e6e1f] bg-white p-8 shadow-md/5 sm:col-span-3"
         >
           {/* heading row like the course card's: heading left, speech
-              bubbles in the top-right corner, 24px from the top and right
+              bubbles in the top-right corner, 32px from the top and right
               edges (decorative), coming in right after the heading */}
           <div className="mb-12 flex flex-row pr-24 sm:pr-28">
             <h3
@@ -260,7 +256,7 @@ export function AboutBox() {
             </h3>
             <Image
               data-stagger={0.12}
-              className="split-reveal absolute top-6 right-6 h-7 w-auto sm:h-11"
+              className="split-reveal absolute top-8 right-8 h-7 w-auto sm:h-11"
               src={talk}
               alt=""
             />

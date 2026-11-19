@@ -9,6 +9,7 @@
   "reviews": [
     {
       "id": 1,
+      "url": "https://www.capterra.com/p/155560/TeeQuest/#b5fc379e-ea88-4a55-8d02-8130ac5e4173",
       "reviewer": {
         "name": "Paul C.",
         "title": "Assistant Golf Professional",
@@ -29,6 +30,7 @@
     },
     {
       "id": 2,
+      "url": "https://www.capterra.com/p/155560/TeeQuest/#762dbe9f-8f5e-4e69-9403-a6317ccef7e8",
       "reviewer": {
         "name": "Andrew S.",
         "title": "General Manager",
@@ -49,6 +51,7 @@
     },
     {
       "id": 3,
+      "url": "https://www.capterra.com/p/155560/TeeQuest/#2a4df89e-e75b-4798-93fe-552be20c7c98",
       "reviewer": {
         "name": "Ashton V.",
         "title": "General Manager",
@@ -72,6 +75,7 @@
     },
     {
       "id": 4,
+      "url": "https://www.capterra.com/p/155560/TeeQuest/#2613b9bd-3cba-4a79-b8f6-a9dc829014f8",
       "reviewer": {
         "name": "Scott D.",
         "title": "Head Professional",
@@ -94,6 +98,7 @@
     },
     {
       "id": 5,
+      "url": "https://www.capterra.com/p/155560/TeeQuest/#ec1b7e16-f88a-4a65-b82e-329652ee789a",
       "reviewer": {
         "name": "Karen G.",
         "title": "Owner, Secretary, Treasurer",
@@ -120,6 +125,7 @@
     },
     {
       "id": 6,
+      "url": "https://www.capterra.com/p/155560/TeeQuest/#3b68e3a7-8cd7-4dea-b1fe-c07ca8e36fd1",
       "reviewer": {
         "name": "Mel P.",
         "title": "General Manager",
@@ -140,6 +146,7 @@
     },
     {
       "id": 7,
+      "url": "https://www.capterra.com/p/155560/TeeQuest/#b56eb634-cef3-41bf-8c25-d39b53fcce89",
       "reviewer": {
         "name": "Donnie B.",
         "title": "General Manager, Head Golf Professional",
@@ -166,6 +173,7 @@
     },
     {
       "id": 8,
+      "url": "https://www.capterra.com/p/155560/TeeQuest/#1743c469-a71b-4067-beba-a05440de652a",
       "reviewer": {
         "name": "Austin H.",
         "title": "Head Golf Professional",
@@ -186,6 +194,7 @@
     },
     {
       "id": 9,
+      "url": "https://www.capterra.com/p/155560/TeeQuest/#51dc4dad-0de0-4d9e-a3b1-e8d11d32205e",
       "reviewer": {
         "name": "Patricia C.",
         "title": "Owner",
@@ -209,6 +218,7 @@
     },
     {
       "id": 10,
+      "url": "https://www.capterra.com/p/155560/TeeQuest/#5c2d7c88-1773-46c1-aaea-229c270706c4",
       "reviewer": {
         "name": "Fred I.",
         "title": "Assistant Golf Course Manager and Tournament Director",
@@ -229,6 +239,7 @@
     },
     {
       "id": 11,
+      "url": "https://www.capterra.com/p/155560/TeeQuest/#e2796220-2d42-11ec-8b30-29215bcaeffc",
       "reviewer": {
         "name": "Larry Y.",
         "title": "General Manager",
@@ -249,6 +260,7 @@
     },
     {
       "id": 12,
+      "url": "https://www.capterra.com/p/155560/TeeQuest/#d107d570-1fa1-11ec-823d-67fde33ef77a",
       "reviewer": {
         "name": "Kevin L.",
         "title": "General Manager/Superintendent",
@@ -269,6 +281,7 @@
     },
     {
       "id": 13,
+      "url": "https://www.capterra.com/p/155560/TeeQuest/#31d64550-1591-11ec-b681-69e9c5196c1f",
       "reviewer": {
         "name": "Hank E.",
         "title": "Head PGA Golf Professional",
@@ -289,6 +302,7 @@
     },
     {
       "id": 14,
+      "url": "https://www.capterra.com/p/155560/TeeQuest/#00d899e0-1568-11ec-98c6-bd289b8d8ef3",
       "reviewer": {
         "name": "Jerrod K.",
         "title": "Golf Shop Manager",
@@ -309,6 +323,7 @@
     },
     {
       "id": 15,
+      "url": "https://www.capterra.com/p/155560/TeeQuest/#a2afc800-1587-11ec-bf6a-3b25e830f609",
       "reviewer": {
         "name": "Kevin C.",
         "title": "Superintendent/GM",
@@ -329,6 +344,7 @@
     },
     {
       "id": 16,
+      "url": "https://www.capterra.com/p/155560/TeeQuest/#fdb67120-12dc-11ec-882d-677ba716147e",
       "reviewer": {
         "name": "Jonathan D.",
         "title": "Golf course manager",
@@ -356,6 +372,7 @@
     },
     {
       "id": 17,
+      "url": "https://www.capterra.com/p/155560/TeeQuest/#286046a0-d33f-11ea-b316-3b9f00e539e7",
       "reviewer": {
         "name": "Ron O.",
         "title": "General Manager",
@@ -379,6 +396,7 @@
     },
     {
       "id": 18,
+      "url": "https://www.capterra.com/p/155560/TeeQuest/#cc57ccd0-c762-11ea-a1cd-6ff584a98898",
       "reviewer": {
         "name": "Rick L.",
         "title": "Manager",
@@ -399,6 +417,7 @@
     },
     {
       "id": 19,
+      "url": "https://www.capterra.com/p/155560/TeeQuest/#ecbef1f0-c1f0-11ea-a73d-e3c1c7e28bb4",
       "reviewer": {
         "name": "Brad S.",
         "title": "Recreation Manager",
@@ -419,6 +438,7 @@
     },
     {
       "id": 20,
+      "url": "https://www.capterra.com/p/155560/TeeQuest/#53796f50-cc99-11e8-9348-051c115124c8",
       "reviewer": {
         "name": "Riley W.",
         "title": "GM",
@@ -439,6 +459,7 @@
     },
     {
       "id": 21,
+      "url": "https://www.capterra.com/p/155560/TeeQuest/#45b53e8f-eccb-48e2-bed0-947dfdc5c399",
       "reviewer": {
         "name": "Conrad K.",
         "title": "Sales Representative",
@@ -459,6 +480,7 @@
     },
     {
       "id": 22,
+      "url": "https://www.capterra.com/p/155560/TeeQuest/#a50f88fd-952e-43f7-97f8-7909f47b9103",
       "reviewer": {
         "name": "Andrew P.",
         "title": "Manager",
@@ -479,6 +501,7 @@
     },
     {
       "id": 23,
+      "url": "https://www.capterra.com/p/155560/TeeQuest/#3f65e96f-cb72-4ce2-8bf2-6bab561265ee",
       "reviewer": {
         "name": "Austin U.",
         "title": "Director of Golf",
@@ -499,6 +522,7 @@
     },
     {
       "id": 24,
+      "url": "https://www.capterra.com/p/155560/TeeQuest/#454fee5a-ed02-4dc2-a8fc-f533fd3d547d",
       "reviewer": {
         "name": "Eric R.",
         "title": "General Manager",
@@ -519,6 +543,7 @@
     },
     {
       "id": 25,
+      "url": "https://www.capterra.com/p/155560/TeeQuest/#702f2709-8a9a-40c3-9dae-98d222dbb6f9",
       "reviewer": {
         "name": "John B.",
         "title": "PGA General Manager",
@@ -539,6 +564,7 @@
     },
     {
       "id": 26,
+      "url": "https://www.capterra.com/p/155560/TeeQuest/#d47ae94f-2507-485b-8276-9395e3af9ed8",
       "reviewer": {
         "name": "Chuck E.",
         "title": "General Manager",
@@ -559,6 +585,7 @@
     },
     {
       "id": 27,
+      "url": "https://www.capterra.com/p/155560/TeeQuest/#3f4b2ad6-8674-478b-a514-9417652011da",
       "reviewer": {
         "name": "Shane G.",
         "title": "PGA Pro",
@@ -579,6 +606,7 @@
     },
     {
       "id": 28,
+      "url": "https://www.capterra.com/p/155560/TeeQuest/#24ce3eeb-903b-4e88-848d-8f97879b5ce3",
       "reviewer": {
         "name": "Eddie H.",
         "title": "General Manager",
@@ -599,6 +627,7 @@
     },
     {
       "id": 29,
+      "url": "https://www.capterra.com/p/155560/TeeQuest/#12f236a1-acc2-4456-94d6-a5ead680a5fc",
       "reviewer": {
         "name": "Alec O.",
         "title": "General Manager",
@@ -622,6 +651,7 @@
     },
     {
       "id": 30,
+      "url": "https://www.capterra.com/p/155560/TeeQuest/#509e0656-5e8f-4be7-bdca-b5dcdde9f406",
       "reviewer": {
         "name": "Christopher B.",
         "title": "General Manager",
@@ -645,6 +675,7 @@
     },
     {
       "id": 31,
+      "url": "https://www.capterra.com/p/155560/TeeQuest/#aa34f82f-bfe2-4059-8fbf-bad825645159",
       "reviewer": {
         "name": "Matt R.",
         "title": null,

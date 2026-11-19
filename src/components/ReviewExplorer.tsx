@@ -39,11 +39,11 @@ export function ReviewExplorer({
     f === "all" ? entries.length : entries.filter((e) => e.rating === f).length;
 
   return (
-    // one white panel with a soft shadow holds the search, the filters and
-    // the cards. 17px of padding (12px plus 5px) leaves room for the
-    // cards' 5px hover ring; the corners grew by the same 5px (21 to 26px)
-    // so the nested corners still line up.
-    <div className="rounded-[26px] border border-neutral-200 bg-white p-[17px] shadow-[0_1px_2px_rgb(0_0_0/0.04),0_8px_24px_-6px_rgb(0_0_0/0.08)]">
+    // one white panel holds the search, the filters and the cards: faint grey
+    // border, 22px corners and a faint shadow-md (/5), like the bento cards.
+    // 17px of padding (12px plus 5px) leaves room for the cards' 5px
+    // hover ring.
+    <div className="rounded-[22px] border border-[#6e6e6e1f] bg-white p-[17px] shadow-md/5">
       {/* search and filters */}
       <div className="flex flex-col gap-3 sm:flex-row">
         <label className="relative flex-1">

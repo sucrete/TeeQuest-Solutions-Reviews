@@ -30,7 +30,7 @@ export function Header() {
     // scrolled past SCROLL_THRESHOLD.
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-50 border-b border-[#ffffff1d] transition-colors duration-150  backdrop-blur-lg shadow-2xl/10",
+        "fixed inset-x-0 top-0 z-50 border-b border-[#2d234c] transition-colors duration-150  backdrop-blur-lg shadow-2xl/10",
         scrolled && "bg-[#ffffffc3] border-[#4e4e4e1d]",
       )}
     >

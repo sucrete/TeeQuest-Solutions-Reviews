@@ -2,6 +2,8 @@ import data from "@/data/reviews.json";
 
 export type Review = {
   id: number;
+  /** link to this review on Capterra, when known */
+  url?: string;
   reviewer: {
     name: string;
     title: string | null;
@@ -45,9 +47,15 @@ export const stats = {
 };
 
 // The text shown as a review's body: the review itself, or, for reviews that
-// only answered pros/cons, their pros (pros and cons aren't shown otherwise).
+// only answered pros/cons, their pros. Cons aren't shown.
 export function reviewBody(r: Review): string | null {
   return r.review || r.pros;
+}
+
+// The pros, when they aren't already the body: shown on the card under
+// Capterra's current label for them, "What do you like best about TeeQuest?"
+export function reviewLikes(r: Review): string | null {
+  return r.review ? r.pros : null;
 }
 
 // Everything a visitor might search for, lowercased once at build time.
@@ -59,6 +67,7 @@ export function searchText(r: Review): string {
     r.title,
     // only the text shown on the card (see reviewBody)
     reviewBody(r),
+    reviewLikes(r),
     r.reason_for_choosing,
     r.switched_from?.product,
     r.switched_from?.reason,
