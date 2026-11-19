@@ -12,7 +12,7 @@ function Field({
   return (
     <div>
       <dt className="text-xs font-medium tracking-wide text-[#63e]">{label}</dt>
-      <dd className="mt-1 leading-7 text-neutral-700">{children}</dd>
+      <dd className="mt-1 leading-7 text-neutral-600">{children}</dd>
     </div>
   );
 }
@@ -48,7 +48,7 @@ export function ReviewCard({ review: r }: { review: Review }) {
       <h3 className="mt-4 text-[23px]/8 font-semibold tracking-tight">
         “{r.title}”
       </h3>
-      {body && <p className="mt-2 leading-7 text-neutral-700">{body}</p>}
+      {body && <p className="mt-2 leading-7 text-neutral-600">{body}</p>}
 
       <dl className="mt-4 space-y-4">
         {r.reason_for_choosing && (

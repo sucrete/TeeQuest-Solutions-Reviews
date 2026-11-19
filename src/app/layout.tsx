@@ -25,7 +25,7 @@ const redaction = localFont({
 });
 
 const title = `TeeQuest Reviews: ${stats.average} Stars from ${stats.count} Golf Course Operators`;
-const description = `Read all ${stats.count} verified TeeQuest reviews from golf course owners, general managers and PGA professionals. Rated ${stats.average} out of 5 on Capterra.`;
+const description = `Read all ${stats.count} verified TeeQuest reviews from golf course owners, GMs and PGA pros on tee sheet, POS and online booking. Rated ${stats.average} out of 5 on Capterra.`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),

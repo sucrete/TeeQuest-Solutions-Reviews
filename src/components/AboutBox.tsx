@@ -7,6 +7,7 @@ import { TextScramble } from "@/components/TextScramble";
 import Image from "next/image";
 import teequestLogo from "@/../public/logos/teequest.svg";
 import flag from "@/../public/shared/flag.svg";
+import talk from "@/../public/shared/talk.png";
 
 // Sentiment summary, styled like a review card (ReviewCard.tsx): white,
 // rounded-xl, neutral-200 border, p-6, semibold tight heading, neutral-700 body
@@ -150,7 +151,7 @@ export function AboutBox() {
           <p
             data-whole
             data-stagger={0.12}
-            className="split-reveal mt-auto leading-7 text-neutral-700"
+            className="split-reveal mt-auto leading-7 text-neutral-600"
           >
             TeeQuest Solutions holds a {stats.average.toFixed(1)}-star rating
             across {stats.count} verified Capterra reviews from golf course
@@ -219,7 +220,7 @@ export function AboutBox() {
           <p
             data-whole
             data-stagger={0.12}
-            className="split-reveal mt-auto leading-7 text-neutral-700"
+            className="split-reveal mt-auto leading-7 text-neutral-600"
           >
             Public, municipal, semi-private and private courses run on TeeQuest,
             from nine holes to 36-hole, multi-course facilities, in all 48
@@ -247,12 +248,23 @@ export function AboutBox() {
           delay={0.15}
           className="relative z-10 flex flex-col rounded-xl border border-neutral-200 bg-white p-6 shadow-[0_1px_2px_rgb(0_0_0/0.04),0_8px_24px_-6px_rgb(0_0_0/0.08)] sm:col-span-3"
         >
-          <h3
-            data-stagger={0.12}
-            className="split-reveal mb-12 text-[23px]/8 font-semibold tracking-tight"
-          >
-            In their own words
-          </h3>
+          {/* heading row like the course card's: heading left, speech
+              bubbles in the top-right corner, 24px from the top and right
+              edges (decorative), coming in right after the heading */}
+          <div className="mb-12 flex flex-row pr-24 sm:pr-28">
+            <h3
+              data-stagger={0.12}
+              className="split-reveal text-[23px]/8 font-semibold tracking-tight"
+            >
+              In their own words
+            </h3>
+            <Image
+              data-stagger={0.12}
+              className="split-reveal absolute top-6 right-6 h-7 w-auto sm:h-11"
+              src={talk}
+              alt=""
+            />
+          </div>
           {/* Review snippets, one at a time: each comes in word by word,
               its attribution scrambles in, and after a few seconds the next
               one replaces it (QuoteCycle). Each is an exact sentence from a
