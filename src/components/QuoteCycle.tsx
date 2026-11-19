@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { TextScramble } from "@/components/TextScramble";
 import { cn } from "@/lib/utils";
 
@@ -74,20 +74,25 @@ export function QuoteCycle({
     };
   }, [delay]);
 
-  // each new quote: its words come in one after another
-  useEffect(() => {
+  // each new quote: its words come in one after another. A layout effect,
+  // so the animations start before the browser paints the new quote; with
+  // useEffect the whole quote showed for one frame first, then blinked out
+  // and came in word by word (the jitter). Any animations still running on
+  // those words are cancelled first, so they never stack.
+  useLayoutEffect(() => {
     if (!started) return;
     const words = ref.current?.querySelectorAll<HTMLElement>(
       "[data-active] [data-word]",
     );
-    words?.forEach((word, i) =>
+    words?.forEach((word, i) => {
+      word.getAnimations().forEach((a) => a.cancel());
       word.animate(WORD_IN, {
         duration: 800,
         delay: i * WORD_STEP_MS,
         easing: CIRC_OUT,
         fill: "backwards",
-      }),
-    );
+      });
+    });
   }, [index, started]);
 
   // hold, fade out, next; while paused, check again shortly
@@ -109,7 +114,12 @@ export function QuoteCycle({
     hold = setTimeout(tick, HOLD_MS);
     return () => {
       clearTimeout(hold);
-      clearTimeout(leave);
+      // cleared mid fade-out (e.g. a hot reload in dev): undo the fade, or
+      // the quote would sit invisible until the next cycle
+      if (leave) {
+        clearTimeout(leave);
+        setLeaving(false);
+      }
     };
   }, [index, started, snippets.length]);
 
