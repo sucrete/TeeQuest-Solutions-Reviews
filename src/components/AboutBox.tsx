@@ -55,6 +55,22 @@ const SNIPPETS: Snippet[] = [
   },
 ];
 
+// A link to one of the services pages on teequestsolutions.com, used in the
+// summary paragraph. Plain followed links (no rel="nofollow"): both sites
+// are TeeQuest's own. New tab, like the site's other outside links.
+function Service({ slug, children }: { slug: string; children: string }) {
+  return (
+    <a
+      href={`https://www.teequestsolutions.com/services/${slug}`}
+      target="_blank"
+      rel="noopener"
+      className="underline decoration-neutral-300 underline-offset-2 transition-colors hover:text-black hover:decoration-current"
+    >
+      {children}
+    </a>
+  );
+}
+
 export function AboutBox() {
   return (
     <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
@@ -157,7 +173,17 @@ export function AboutBox() {
             vendor. Fourteen say the POS and tee sheet are easy to learn, even
             for new and part-time staff. Six courses switched from GolfNow and
             now set their own rates instead of trading tee times away. Nine
-            credit a smooth setup and training process. 
+            credit a smooth setup and training process. TeeQuest Solutions
+            provides a pick-and-choose suite of services for golf course owners,
+            including <Service slug="tee-sheet">tee sheet software</Service>,{" "}
+            <Service slug="point-of-sale">point of sale</Service>, a{" "}
+            <Service slug="website">website</Service> and{" "}
+            <Service slug="booking-engine">booking engine</Service>,{" "}
+            <Service slug="email-marketing">email marketing</Service>,{" "}
+            <Service slug="reporting">reporting</Service>,{" "}
+            <Service slug="member-billing">member billing</Service>,{" "}
+            <Service slug="bev-cart">beverage cart tablet</Service>, and{" "}
+            <Service slug="hardware">hardware</Service>.
           </p>
 
           <footer className="mt-6 border-t border-neutral-200 pt-4 text-sm text-neutral-500">

@@ -8,22 +8,22 @@ export type Snippet = { quote: string; by: string };
 
 const HOLD_MS = 5000; // how long each quote stays once it's in
 const LEAVE_MS = 350; // fade-out before the next quote
-const WORD_STEP_MS = 50; // between words coming in
-// the site's word entrance (Reveal.tsx): rise 10px and fade in, circ.out
-const WORD_IN: Keyframe[] = [
+// the site's entrance (Reveal.tsx): rise 10px and fade in, circ.out, 0.8s
+const ENTER_MS = 800;
+const ENTER: Keyframe[] = [
   { opacity: 0, transform: "translateY(10px)" },
   { opacity: 1, transform: "none" },
 ];
 const CIRC_OUT = "cubic-bezier(0, 0.55, 0.45, 1)";
 
-// One review snippet at a time. The quote comes in word by word and the
+// One review snippet at a time. The quote comes in as one piece and the
 // attribution scrambles in (Departure Mono, TextScramble); after HOLD_MS it
 // fades out and the next one comes in, looping. It starts once it's half in
 // view (after `delay` seconds) and pauses while the card is hovered, while
 // it's off screen and while the tab is hidden.
 //
 // Every snippet is stacked in the same grid cell (the inactive ones
-// invisible), so the box is always as tall as the longest and the card
+// transparent), so the box is always as tall as the longest and the card
 // doesn't jump between quotes. All snippets are also in an sr-only list,
 // so screen readers and crawlers get every quote; the animated copy is
 // aria-hidden. With reduced motion it shows the first quote, still.
@@ -74,25 +74,30 @@ export function QuoteCycle({
     };
   }, [delay]);
 
-  // each new quote: its words come in one after another. A layout effect,
-  // so the animations start before the browser paints the new quote; with
-  // useEffect the whole quote showed for one frame first, then blinked out
-  // and came in word by word (the jitter). Any animations still running on
-  // those words are cancelled first, so they never stack.
+  // each new quote comes in whole, with the Reveal entrance. A layout
+  // effect, so the animation starts before the browser paints the new
+  // quote (with useEffect the quote showed for one frame, then blinked
+  // out). Anything still running on it is cancelled first.
   useLayoutEffect(() => {
     if (!started) return;
-    const words = ref.current?.querySelectorAll<HTMLElement>(
-      "[data-active] [data-word]",
+    const quote = ref.current?.querySelector<HTMLElement>(
+      "[data-active] blockquote",
     );
-    words?.forEach((word, i) => {
-      word.getAnimations().forEach((a) => a.cancel());
-      word.animate(WORD_IN, {
-        duration: 800,
-        delay: i * WORD_STEP_MS,
-        easing: CIRC_OUT,
-        fill: "backwards",
-      });
+    if (!quote) return;
+    quote.getAnimations().forEach((a) => a.cancel());
+    quote.animate(ENTER, {
+      duration: ENTER_MS,
+      easing: CIRC_OUT,
+      fill: "backwards",
     });
+    // Safety net: once the entrance should be over, cancel anything still
+    // attached, so the quote falls back to its normal, visible style even
+    // if the animation stalled on its first frame.
+    const safety = setTimeout(
+      () => quote.getAnimations().forEach((a) => a.cancel()),
+      ENTER_MS + 100,
+    );
+    return () => clearTimeout(safety);
   }, [index, started]);
 
   // hold, fade out, next; while paused, check again shortly
@@ -134,7 +139,6 @@ export function QuoteCycle({
       </ul>
       {snippets.map((s, i) => {
         const active = i === index;
-        const words = `“${s.quote}”`.split(" ");
         return (
           <figure
             key={s.by}
@@ -144,22 +148,25 @@ export function QuoteCycle({
               // bottom-left of the shared cell, so shorter quotes sit on
               // the same baseline as the longest instead of at the top
               "col-start-1 row-start-1 self-end text-left transition-opacity",
-              !active && "invisible",
+              // will-change here and on the quote: each keeps its own
+              // compositor layer for good. Otherwise every fade and
+              // entrance adds a layer and drops it when done, and those
+              // layer-tree rebuilds made the header's backdrop blur
+              // flicker every 5 seconds.
+              // Inactive quotes are hidden with opacity, not visibility,
+              // for the same reason: a visibility change rebuilds layers.
+              "will-change-[opacity]",
+              !active && "pointer-events-none opacity-0 select-none",
               active && leaving && "opacity-0",
               // hidden until it starts, so the first quote doesn't flash
-              !started && "motion-safe:[@media(scripting:enabled)]:invisible",
+              !started && "motion-safe:[@media(scripting:enabled)]:opacity-0",
             )}
-            style={{ transitionDuration: `${LEAVE_MS}ms` }}
+            // only the fade-out is animated; the next quote shows at once
+            // (its entrance brings it in)
+            style={{ transitionDuration: leaving ? `${LEAVE_MS}ms` : "0ms" }}
           >
-            <blockquote className="text-lg/7 font-medium tracking-tight text-neutral-800">
-              {words.map((w, j) => (
-                <span key={j}>
-                  <span data-word className="inline-block">
-                    {w}
-                  </span>
-                  {j < words.length - 1 && " "}
-                </span>
-              ))}
+            <blockquote className="text-lg/7 font-medium tracking-tight text-neutral-800 will-change-[opacity,transform]">
+              “{s.quote}”
             </blockquote>
             <figcaption className="mt-3 font-mono text-sm text-neutral-500 uppercase md:text-xs">
               {active && started ? (

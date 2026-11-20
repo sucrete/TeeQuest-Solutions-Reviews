@@ -30,7 +30,10 @@ export function Header() {
     // scrolled past SCROLL_THRESHOLD.
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-50 border-b border-[#2d234c] transition-colors duration-150  backdrop-blur-lg shadow-2xl/10",
+        // transform-gpu gives the header its own stable compositor layer, so
+        // the backdrop blur doesn't drop out for a frame (flicker) when
+        // layers elsewhere on the page are added or removed
+        "fixed inset-x-0 top-0 z-50 transform-gpu border-b border-[#2d234c] backdrop-blur-lg shadow-2xl/10 transition-colors duration-150",
         scrolled && "bg-[#ffffffc3] border-[#4e4e4e1d]",
       )}
     >
